@@ -1,0 +1,7 @@
+dataset,kid_baseline,uniform_fb_baseline_pct,hub_fb_baseline_pct,kid_current,uniform_fb_current_pct,hub_fb_current_pct,best_tested
+BerkStan,0,8.4,44.01,14,1.31,4.77,current
+Google,0,6.71,26.26,15,0.49,3.54,current
+Stanford,0,6.21,28.12,12,1.07,5.41,current
+NotreDame,0,2.79,44.2,11,0.21,1.67,current
+LiveJournal,0,6.68,43.44,17,6.42,38.86,current
+Epinions,0,1.09,21.28,10,1.12,23.6,kid=0

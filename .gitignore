@@ -1,0 +1,10 @@
+# local/build
+build/
+tmp/
+__pycache__/
+*.pyc
+*.o
+*.so
+
+# large graph data
+data/raw/
