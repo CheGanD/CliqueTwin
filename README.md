@@ -1,62 +1,90 @@
 # CliqueTwin
 
-Public artifact repository for the PVLDB/VLDB 2027 submission:
+CliqueTwin is a fixed-footprint graph representation for exact edge queries. It combines a positive clique certificate with a residual negative certificate in one 64-bit header per vertex.
 
-**CliqueTwin: Eliminating Tail Fallbacks in Cache-Centric Graph Representations via Dual Certificates**
+For a pair of vertices `(u, v)`, CliqueTwin follows three steps:
 
-## Artifact scope
+1. **Positive certificate:** equal nonzero PIDs certify an edge inside an extracted clique.
+2. **Negative certificate:** a shared residual GT' bit certifies a non-edge.
+3. **Exact fallback:** unresolved pairs are checked in the residual adjacency structure.
 
-This repository is intentionally limited to the experiments supporting the paper's main claims:
+The representation is exact: certificate decisions are one-sided, and unresolved pairs fall back to exact lookup.
 
-1. GT64 long-tail concentration under uniform edge queries.
-2. Structural diagnosis: degeneracy/core effects, same-bit residualization, and matched-random control.
-3. PID / residual-GT bit-budget allocation under a fixed 64-bit header.
-4. GT64/GT128/GT256 vs. CliqueTwin-64 systems evaluation, including fallback, latency, LLC misses, mixed edge/non-edge queries, and boundary cases.
-5. End-to-end triangle counting.
-6. End-to-end subgraph matching (GPM).
+## Construction
 
-Exploratory, superseded, or debugging-only experiments are intentionally excluded.
+The implementation in `src/CliqueTwinCore.hpp`:
 
-## Current public snapshot
-
-This initial snapshot contains:
-- the public repository layout;
-- paper-facing experiment descriptions;
-- processed numerical results already frozen for the paper;
-- dataset provenance instructions.
-
-The final source code, runners, and frozen raw-result bundles will be added before the full-paper submission deadline. No placeholder code is presented as a completed artifact.
+1. greedily extracts vertex-disjoint cliques, starting at size 5 and supplementing with sizes 4 and 3 when PID capacity permits;
+2. assigns each extracted clique a nonzero PID;
+3. removes clique-internal edges to form a residual graph;
+4. builds an MIS-based negative certificate on the residual graph;
+5. packs PID bits and residual GT' bits into a 64-bit vertex header.
 
 ## Repository layout
 
 ```text
+src/
+  GraphUtils.hpp          graph I/O, CSR, and generic MIS utilities
+  CliqueTwinCore.hpp      CliqueTwin construction and exact query path
+examples/
+  edge_query.cpp          minimal edge-query example
+applications/triangle/
+  triangle_ct_online.cpp  CliqueTwin triangle counting
 experiments/
-  01_long_tail/
-  02_structural_mechanism/
-  03_pid_budget/
-  04_tail_cache/
-applications/
-  triangle/
-  subgraph_matching/
+  ct_structure.cpp        residual-structure statistics
+  ct_query_benchmark.cpp  CliqueTwin query/fallback benchmark
 data/
-results/processed/
-figures/data/
-scripts/
+  README.md               datasets and download sources
+  datasets.csv            machine-readable dataset list
+  example.txt             small local test graph
+```
+
+## Build
+
+Requirements:
+
+- C++17 compiler
+- CMake 3.16 or newer
+
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j
+```
+
+Or run:
+
+```bash
+./scripts/build.sh
+```
+
+## Quick start
+
+Build CliqueTwin and answer one edge query:
+
+```bash
+./build/ct_edge_query data/example.txt 0 1
+```
+
+Inspect the residual structure:
+
+```bash
+./build/ct_structure data/example.txt
+```
+
+Run a query benchmark:
+
+```bash
+./build/ct_query_benchmark data/example.txt 100000 1
+```
+
+Run CliqueTwin triangle counting:
+
+```bash
+./build/ct_triangle_online data/example.txt
 ```
 
 ## Datasets
 
-Large public graph datasets are not redistributed in this repository. `data/README.md` records the expected public-source/provenance workflow.
+The main experiments use 15 real-world graphs: Gnutella, Epinions, Slashdot0902, Stanford, NotreDame, BerkStan, Google, Youtube, Wikitalk, LiveJournal, CTR, USA, IT-2004, SK, and Friendster.
 
-## Reproducibility
-
-Every final experiment directory will contain:
-- exact build/run commands;
-- configuration and seeds;
-- expected output schema;
-- paper-facing processed tables;
-- checksums for frozen result bundles where applicable.
-
-## Contact
-
-Please use the author contact information provided in the paper submission.
+The graph files are not included. See [`data/README.md`](data/README.md) for the original public download sources and expected input format.

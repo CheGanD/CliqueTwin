@@ -1,9 +1,0 @@
-dataset,coverage_G_samebits_uniform_pct,coverage_Gprime_samebits_uniform_pct,coverage_G_samebits_hub_pct,coverage_Gprime_samebits_hub_pct
-Stanford,92.18,98.94,66.85,94.67
-NotreDame,96.72,99.8,52.0,98.3
-BerkStan,88.84,98.68,50.91,95.29
-Google,90.75,99.51,68.21,96.38
-LiveJournal,90.53,93.6,48.62,61.1
-IT-2004,73.66,97.29,30.73,85.92
-SK,61.34,94.8,26.37,82.18
-Friendster,84.77,85.1,38.8,38.63

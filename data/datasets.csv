@@ -1,0 +1,16 @@
+dataset,abbr,collection,source,type
+Gnutella,Gn,SNAP,https://snap.stanford.edu/data/p2p-Gnutella31.html,P2P network
+Epinions,Ep,SNAP,https://snap.stanford.edu/data/soc-Epinions1.html,social network
+Slashdot0902,Sl,SNAP,https://snap.stanford.edu/data/soc-Slashdot0902.html,social network
+Stanford,St,SNAP,https://snap.stanford.edu/data/web-Stanford.html,web graph
+NotreDame,No,SNAP,https://snap.stanford.edu/data/web-NotreDame.html,web graph
+BerkStan,Be,SNAP,https://snap.stanford.edu/data/web-BerkStan.html,web graph
+Google,Go,SNAP,https://snap.stanford.edu/data/web-Google.html,web graph
+Youtube,Yo,SNAP,https://snap.stanford.edu/data/com-Youtube.html,social network
+Wikitalk,Wt,SNAP,https://snap.stanford.edu/data/wiki-Talk.html,communication network
+LiveJournal,Li,SNAP,https://snap.stanford.edu/data/soc-LiveJournal1.html,social network
+CTR,CTR,DIMACS,https://www.diag.uniroma1.it/challenge9/download.shtml,road network
+USA,USA,DIMACS,https://www.diag.uniroma1.it/challenge9/download.shtml,road network
+IT-2004,IT,LAW,https://law.di.unimi.it/datasets.php,web crawl
+SK,SK,LAW,https://law.di.unimi.it/datasets.php,web crawl
+Friendster,Fr,SNAP,https://snap.stanford.edu/data/com-Friendster.html,social network
